@@ -42,5 +42,10 @@ RND 논문은 Deep reinforcement learning을 통해 Agent를 학습할 때 적�
 이 중 1번째 요소는 exploration bonus로 활용할 수 있습니다. 실제로 prediction error가 발생하는 이유는 위의 요소들의 종합적인 이유이지만 모든 요소가 bonus로 여기기에 좋지는 않습니다. 
 2번 요소의 경우 'noisy-TV' 문제로 유명한 문제이며 2번과 3번 요소를 해결하기 위해서 새로운 데이터 포인트를 볼 때 예측 모델이 얼마나 향상되는지 측정하는 연구 방법들이 있었으나 계산 측면에서 효율적이지 못하였습니다. (Reference : Schmidhuber (1991a); Oudeyer et al. (2007); Lopes et al. (2012); Achiam & Sastry (2017) )  
 
+**COMBINING INTRINSIC AND EXTRINSIC RETURNS**
+이 논문에서는 "non-episodic"이라는 표현으로 환경에서의 reward없이 intrinsic reward만을 가지고 학습한 경우를 정의합니다.  
+이때, Agent가 얻는 intrinsic reward는 모든 에피소드에서 발생하는지 또는 여러 에피소드에 퍼져있는지에 관계없이 새롭게 도달하게 되는 State 라는 정보에만 영향을 받게 됩니다. 이런 non-episodic intrinsic reward가 효과적이라는 예시로 episodic intrinsic reward와 같이 episode마다 구분을 하게 된다면 "gameover"라는 정보에 의해서 때로는 Agent가 학습할 정보가 사라질 수 있다고 말합니다.
+그러나, intrinsic reward 만을 사용하는 것에도 게임의 시작 부분에 가까운 보상을 찾아 고의적으로 게임을 계속 다시 시작하는 행동을 반복하는 것과 같은 잘못된 학습이 이루어질 수 있습니다. 그러므로, Intrinsic reward와 extrinsic reward를 적절히 섞어 주는것이 exploration을 위해서 적합할 수 있다고 얘기합니다.
 
-
+**REWARD AND OBSERVATION NORMALIZATION**
+exploration reward로 prediction error를 사용하는 것과 관련된 한 가지 문제점은 reward의 scale이 다른 환경과 다른 시점에서 크게 다를 수 있으므로 모든 환경/설정에서 효과적인 hyperparameter를 찾는것이 어렵다는 것입니다. 이 논문에서는 Continuos control 문제에서 자주 사용하는 방법으로 Standard deviation과 Mean 값을 빼고 나누는 방법으로 intrinsic reward를 normalization 합니다. 그와 함께 Observation normalization 방법도 사용하며 observation normalization은 -5 ~ +5 로 clip을 수행합니다. ( subtracting the running mean and then dividing by the running standard deviation. )
