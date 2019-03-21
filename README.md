@@ -51,4 +51,6 @@ RND 논문은 Deep reinforcement learning을 통해 Agent를 학습할 때 적�
 exploration reward로 prediction error를 사용하는 것과 관련된 한 가지 문제점은 reward의 scale이 다른 환경과 다른 시점에서 크게 다를 수 있으므로 모든 환경/설정에서 효과적인 hyperparameter를 찾는것이 어렵다는 것입니다. 이 논문에서는 Continuos control 문제에서 자주 사용하는 방법으로 Standard deviation과 Mean 값을 빼고 나누는 방법으로 intrinsic reward를 normalization 합니다. 그와 함께 Observation normalization 방법도 사용하며 observation normalization은 -5 ~ +5 로 clip을 수행합니다. ( subtracting the running mean and then dividing by the running standard deviation. )
 
 **Algorithm**
+![7](./img/7.PNG)
+
 ![6](./img/6.PNG)
