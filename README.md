@@ -23,4 +23,14 @@ RND 논문은 Deep reinforcement learning을 통해 Agent를 학습할 때 적�
 2. Non-Tabular Setting : State 를 대부분 한 번만 방문하기 때문에 방문했던 횟수에 대한 count는 적절하지 못합니다. 그러므로, state density esimation의 변화를 instrinsic reward로 사용하는 방법 (Reference : Marc Bellemare, Sriram Srinivasan, Georg Ostrovski, Tom Schaul, David Saxton, and Remi Munos. Unifying count-based exploration and intrinsic motivation. In NIPS, 2016.)  
 
 **Random Network Distillation**  
+이 논문에서 제시하는 방법인 RND는 다음과 같이 2가지 neural network를 활용합니다.  
+1. a ﬁxed and randomly initialized target network. 
+![3](./img/3.PNG)
+2. a predictor network trained on data collected by the agent. 
+![4](./img/4.PNG)
+
+이때, predictor network는 MSE 를 최소화하는 방향으로 학습을 하여 새로운 state를 만나게 되었을 때 prediction error가 큰 network가 되도록 합니다.
+![5](./img/5.PNG)
+
+
 
