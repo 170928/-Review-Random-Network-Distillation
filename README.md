@@ -54,6 +54,8 @@ exploration reward로 prediction error를 사용하는 것과 관련된 한 가�
 ![7](./img/7.PNG)
 > https://bluediary8.tistory.com/37 에서 참조하였습니다!  
 
-RND는 t timestep 에서 Agent의 action에 의해서 변화된 next state에 대해 feature를 추출합니다. 랜덤으로 가중치를 초기화시키고 고정시킨 target network는 계속해서 같은 state에 대해 같은 feature의 추출을 해주기만 하면 되기 때문에 학습이 필요없어집니다. 어차피 비슷한 state에 대해서는 비슷한 output feature를 내뱉게 됩니다. Target network의 output을 predictor network로 학습을 시키면 결국 predictor network는 target network와 비슷한 모델이 되어갑니다. 하지만 episode 과정중에 계속 보왔던 state에 대해 학습이 되기 때문에, 이전에 보왔던 state에 대해서 overfitting되게 되고, 보지 않았던 새로운 state를 보게 된다면, target network의 output과는 조금 다른 output을 내게 됩니다. 즉, 새로운 state를 찾아가면서 하는 행동에 대해서는 reward를 많이 줄수 있게 되는 것이죠. (이때, predictor network와 target network가 완전히 동일하게 되서 무조건 같은 output을 내지 않을까하는 의문이 들수도 있습니다만, MNIST데이터를 학습시키는 CNN모델만 생각해도 완전히 overfitting되는 열개의 모델을 만들어도 각기 NN의 weight는 다르다 라는 것을 생각해보면 직관적으로 절대 같아질수 없다라는 것을 이해할 수 있습니다.
+RND는 t timestep 에서 Agent의 action에 의해서 변화된 next state에 대해 feature를 추출합니다. 랜덤으로 가중치를 초기화시키고 고정시킨 target network는 계속해서 같은 state에 대해 같은 feature의 추출을 해주기만 하면 되기 때문에 학습이 필요없어집니다.  
+Target network의 output을 predictor network로 학습을 시키면 결국 predictor network는 target network와 비슷한 feature를 추출하도록 학습하게 됩니다. 그러나, 학습 과정에서 경험했던 state에 대해서만 학습이 되기 때문에, 경험 했던 state에 대해서는 prediction error가 줄어들게 되고 새로운 state에 대해서는 prediction error가 커지게 됩니다. 이러한 특징이 RND에서 Intrinsic reward가 새로운 state를 만나게 되었을 때 높은 reward를 줄수 있게해줍니다.
 
+다음은 논문에서 제시하고 있는 RND가 적용된 알고리즘입니다.  
 ![6](./img/6.PNG)
